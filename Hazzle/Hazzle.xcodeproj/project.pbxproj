@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		690132503D971188C3C4DBB9 /* Pods_Hazzle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93AAFFFDE1E692191246C896 /* Pods_Hazzle.framework */; };
 		872C15F8253EB833007EC5A3 /* Habit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 872C15F7253EB833007EC5A3 /* Habit.swift */; };
 		872C15FB253EB905007EC5A3 /* Memo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 872C15FA253EB905007EC5A3 /* Memo.swift */; };
 		872C15FE253EB98B007EC5A3 /* Alarm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 872C15FD253EB98B007EC5A3 /* Alarm.swift */; };
@@ -27,6 +26,7 @@
 		87E277782539B34300D0F2B2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 87E277762539B34300D0F2B2 /* Main.storyboard */; };
 		87E2777A2539B34400D0F2B2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 87E277792539B34400D0F2B2 /* Assets.xcassets */; };
 		87E2777D2539B34400D0F2B2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 87E2777B2539B34400D0F2B2 /* LaunchScreen.storyboard */; };
+		F6E574E3A2E9745A2ADA5614 /* Pods_Hazzle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93AAFFFDE1E692191246C896 /* Pods_Hazzle.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -61,7 +61,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				690132503D971188C3C4DBB9 /* Pods_Hazzle.framework in Frameworks */,
+				F6E574E3A2E9745A2ADA5614 /* Pods_Hazzle.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

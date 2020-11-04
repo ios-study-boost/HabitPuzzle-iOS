@@ -5,6 +5,9 @@
       location = "group:Hazzle.xcodeproj">
    </FileRef>
    <FileRef
+      location = "group:Pods/../.swiftlint.yml">
+   </FileRef>
+   <FileRef
       location = "group:Pods/Pods.xcodeproj">
    </FileRef>
 </Workspace>

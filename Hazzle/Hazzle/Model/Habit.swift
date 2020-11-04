@@ -17,8 +17,9 @@ import RealmSwift
  - `photo`: 퍼즐 이미지
  - `goal`: 목표 횟수
  - `numberOfDays`: 일주일 주기
- - `grid`: 완료한 퍼즐을 저장할 `Boolean` 타입의 2차원 배열
  - `count`: 완료 횟수
+ - `grid`: 완료한 퍼즐을 저장할 `Boolean` 타입의 2차원 배열
+ - `memo`: 메모
  */
 class Habit: Object {
     @objc dynamic var identifier: String = UUID().uuidString
@@ -27,6 +28,7 @@ class Habit: Object {
     @objc dynamic var photo: String = ""
     @objc dynamic var goal: Int = 0
     @objc dynamic var numberOfDays: Int = 0
-    var grid: List<Bool> = List<Bool>()
     @objc dynamic var count: Int = 0
+    var grid: List<Bool> = List<Bool>()
+    var memo: List<Memo> = List<Memo>()
 }

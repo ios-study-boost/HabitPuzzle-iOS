@@ -13,9 +13,8 @@ import PuzzleMaker
 class HabitDetailViewController: UIViewController {
     // MARK: - Properties
     let screenBounds = UIScreen.main.bounds
-    let sideMargin:CGFloat = 30
+    let sideMargin: CGFloat = 30
     lazy var contentViewSize = CGSize(width: self.view.frame.width, height: self.view.frame.height + 80)
-    
     // MARK: - Views
     lazy var scrollView = UIScrollView().then {
         $0.contentSize = contentViewSize
@@ -28,7 +27,7 @@ class HabitDetailViewController: UIViewController {
         $0.backgroundColor = . white
         $0.frame.size = contentViewSize
     }
-    lazy var puzzleView = UIView().then {
+    var puzzleView = UIView().then {
         $0.layer.cornerRadius = 10
         $0.layer.borderWidth = 0.5
         $0.layer.masksToBounds = true // 라운드 크기를 넘어가면 짜르기
@@ -39,6 +38,11 @@ class HabitDetailViewController: UIViewController {
         $0.alignment = .fill
         $0.distribution = .fillProportionally
         $0.spacing = 5
+    }
+    var memoAttributeStackView = UIStackView().then {
+        $0.axis = .horizontal
+        $0.alignment = .fill
+        $0.distribution = .equalSpacing
     }
     var statisticStackView = UIStackView().then {
         $0.axis = .horizontal
@@ -51,7 +55,7 @@ class HabitDetailViewController: UIViewController {
         $0.alignment = .fill
         $0.distribution = .fillProportionally
         $0.spacing = 0
-//        $0.translatesAutoresizingMaskIntoConstraints = false // 이게 없으면 안나옴 뭔지 체크
+        //        $0.translatesAutoresizingMaskIntoConstraints = false // 이게 없으면 안나옴 뭔지 체크
     }
     var monthStackView = UIStackView().then {
         $0.axis = .vertical
@@ -93,12 +97,18 @@ class HabitDetailViewController: UIViewController {
         $0.text = "Puzzle"
         $0.font = UIFont(name: "Helvetica-Bold", size: 20)
         $0.textAlignment = .left
-        
     }
     var memoLabel = UILabel().then {
         $0.text = "Memo"
         $0.font = UIFont(name: "Helvetica-Bold", size: 20)
         $0.textAlignment = .left
+    }
+    var memoListButton = UIButton().then {
+        $0.setTitle("MemoList", for: .normal)
+        $0.layer.cornerRadius = 3
+        $0.layer.borderWidth = 2
+        $0.layer.borderColor = UIColor.blue.cgColor // 색상 변경
+        $0.backgroundColor = .blue
     }
     var dateLabel = UILabel().then {
         let today = Date()
@@ -108,13 +118,14 @@ class HabitDetailViewController: UIViewController {
         $0.font = UIFont(name: "Helvetica", size: 15)
         $0.textAlignment = .left
     }
-    var memoTextView = UITextView().then {
+    lazy var memoTextView = UITextView().then {
         $0.text = "메모를 입력해주세요"
         $0.textColor = UIColor.lightGray
         $0.textAlignment = .left
         $0.layer.borderWidth = 2
         $0.layer.cornerRadius = 5
         $0.layer.borderColor = UIColor.darkGray.cgColor
+        $0.delegate = self
     }
     var statisticLabel = UILabel().then {
         $0.text = "Statistic"
@@ -204,26 +215,26 @@ class HabitDetailViewController: UIViewController {
         $0.layer.cornerRadius = 5
         $0.layer.borderColor = UIColor.darkGray.cgColor
     }
-    
     // MARK: - View Controller LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureScrollView()
+        configurePuzzleView()
+        configureMemo()
+        configureStatistic()
+        configureContinuity()
+    }
+    func configureScrollView() {
+        // Add to view hierarchy
         view.addSubview(scrollView)
         scrollView.addSubview(containerView)
-        memoTextView.delegate = self
-        setPuzzleView()
-        memo()
-        statistic()
-        continuity()
     }
-    
-    func setPuzzleView() {
+    func configurePuzzleView() {
         // Add to view hierarchy
         containerView.addSubview(puzzleLabel)
         containerView.addSubview(puzzleView)
-        
         // Constraints
-        puzzleLabel.snp.makeConstraints{ make in
+        puzzleLabel.snp.makeConstraints { make in
             make.top.equalTo(containerView).offset(10)
             make.leading.equalToSuperview().offset(sideMargin)
             make.trailing.equalToSuperview().offset(-sideMargin)
@@ -233,32 +244,27 @@ class HabitDetailViewController: UIViewController {
             make.width.height.equalTo(puzzleLabel.snp.width)
             make.centerX.equalTo(self.view)
         }
-        
         // image example handling
         let numRows = 5
         let numColumns = 5
-        let imageBool = [[true,true,true,true,true],
-                         [true,true,true,true,true],
-                         [true,true,true,true,true],
-                         [true,true,true,true,true],
-                         [true,true,true,true,true]]
-        
+        let imageBool = [[true, true, true, true, true],
+                         [true, true, true, true, true],
+                         [true, true, true, true, true],
+                         [true, true, true, true, true],
+                         [true, true, true, true, true]]
         let image = UIImage(named: "testImage")
         let puzzleMaker = PuzzleMaker(image: (image?.resizedImage(for: CGSize(width: self.screenBounds.size.width - 60, height: self.screenBounds.size.width - 60)))!, numRows: numRows, numColumns: numColumns)
         puzzleMaker.generatePuzzles { throwableClosure in
             do {
                 let puzzleElements = try throwableClosure()
                 for row in 0 ..< numRows {
-                    for column in 0 ..< numColumns {
-                        if imageBool[row][column] {
-                            guard let puzzleElement = puzzleElements[row][column] else { continue }
-                            let position = puzzleElement.position
-                            let image = puzzleElement.image
-                            let imgView = UIImageView(frame: CGRect(x: position.x, y: position.y, width: image.size.width, height: image.size.height))
-                            imgView.image = image
-                            
-                            self.puzzleView.addSubview(imgView)
-                        }
+                    for column in 0 ..< numColumns where imageBool[row][column] {
+                        guard let puzzleElement = puzzleElements[row][column] else { continue }
+                        let position = puzzleElement.position
+                        let image = puzzleElement.image
+                        let imgView = UIImageView(frame: CGRect(x: position.x, y: position.y, width: image.size.width, height: image.size.height))
+                        imgView.image = image
+                        self.puzzleView.addSubview(imgView)
                     }
                 }
             } catch {
@@ -266,14 +272,14 @@ class HabitDetailViewController: UIViewController {
             }
         }
     }
-    
-    func memo() {
+    func configureMemo() {
         // Add to view hierarchy
         containerView.addSubview(memoLabel)
         containerView.addSubview(memoStackView)
-        memoStackView.addArrangedSubview(dateLabel)
+        memoAttributeStackView.addArrangedSubview(dateLabel)
+        //memoAttributeStackView.addArrangedSubview(memoListButton)
+        memoStackView.addArrangedSubview(memoAttributeStackView)
         memoStackView.addArrangedSubview(memoTextView)
-        
         // Constraints
         memoLabel.snp.makeConstraints { make in
             make.leading.trailing.equalTo(puzzleLabel)
@@ -288,7 +294,7 @@ class HabitDetailViewController: UIViewController {
             make.top.equalTo(memoLabel.snp.bottom).offset(10)
         }
     }
-    func statistic() {
+    func configureStatistic() {
         // Add to view hierarchy
         containerView.addSubview(statisticLabel)
         containerView.addSubview(statisticStackView)
@@ -304,13 +310,12 @@ class HabitDetailViewController: UIViewController {
         statisticStackView.addArrangedSubview(monthStackView)
         statisticStackView.addArrangedSubview(yearStackView)
         statisticStackView.addArrangedSubview(allStackView)
-        
         // Constraints
         statisticLabel.snp.makeConstraints { (make) in
             make.leading.trailing.equalTo(memoLabel)
             make.top.equalTo(memoStackView.snp.bottom).offset(10)
         }
-        let labels = [weekCountLabel,monthCountLabel,yearCountLabel,allCountLabel]
+        let labels = [weekCountLabel, monthCountLabel, yearCountLabel, allCountLabel]
         for label in labels {
             label.snp.makeConstraints { make in
                 make.height.equalTo((self.screenBounds.size.width - sideMargin - sideMargin - 60)/10)
@@ -321,8 +326,7 @@ class HabitDetailViewController: UIViewController {
             make.top.equalTo(statisticLabel.snp.bottom).offset(10)
         }
     }
-    
-    func continuity() {
+    func configureContinuity() {
         // Add to view hierarchy
         containerView.addSubview(continuityLabel)
         containerView.addSubview(continuityStackView)
@@ -332,7 +336,6 @@ class HabitDetailViewController: UIViewController {
         bestStackView.addArrangedSubview(bestCountLabel)
         continuityStackView.addArrangedSubview(currentStackView)
         continuityStackView.addArrangedSubview(bestStackView)
-        
         // Constraints
         continuityLabel.snp.makeConstraints { (make) in
             make.leading.trailing.equalTo(statisticLabel)
@@ -342,9 +345,7 @@ class HabitDetailViewController: UIViewController {
             make.leading.trailing.equalTo(statisticStackView)
             make.top.equalTo(continuityLabel.snp.bottom).offset(10)
         }
-        
     }
-    
     /*
      // MARK: - Navigation
      
@@ -354,7 +355,6 @@ class HabitDetailViewController: UIViewController {
      // Pass the selected object to the new view controller.
      }
      */
-    
 }
 
 extension HabitDetailViewController: UITextViewDelegate {
@@ -378,7 +378,7 @@ extension UIImage {
     // UIGraphicsImageRenderer - Image resize
     func resizedImage(for size: CGSize) -> UIImage? {
         let renderer = UIGraphicsImageRenderer(size: size)
-        return renderer.image { (context) in
+        return renderer.image { _ in
             self.draw(in: CGRect(origin: .zero, size: size))
         }
     }

@@ -32,12 +32,15 @@ class Habit: Object {
     var grid: List<Bool> = List<Bool>()
     var memo: List<Memo> = List<Memo>()
     
+    override init() {
+        super.init()
+        initGrid()
+    }
     func initGrid() {
         for _ in 0..<goal {
             grid.append(false)
         }
     }
-    
     func conutUp() {
         count += 1
         if goal < count { return }

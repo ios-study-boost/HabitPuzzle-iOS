@@ -31,4 +31,17 @@ class Habit: Object {
     @objc dynamic var count: Int = 0
     var grid: List<Bool> = List<Bool>()
     var memo: List<Memo> = List<Memo>()
+    
+    func initGrid() {
+        for _ in 0..<goal {
+            grid.append(false)
+        }
+    }
+    
+    func conutUp() {
+        count += 1
+        if goal < count { return }
+        let index = grid.filter { $0 == false }.indices.randomElement()
+        grid[index!] = true
+    }
 }

@@ -12,7 +12,7 @@ class HomeViewController: UIViewController {
     let habits = ["수영하기 🏊‍♀️", "물 마시기 💦", "일기 쓰기 📓"]
     let habitCnts = [13, 33, 53]
     // MARK: - views
-    lazy var contentViewSize = CGSize(width: self.view.frame.width, height: self.view.frame.height+400)
+    lazy var contentViewSize = CGSize(width: self.view.frame.width, height: self.view.frame.height)
     lazy var scrollView = UIScrollView().then {
         $0.frame = .zero
         $0.backgroundColor = .white

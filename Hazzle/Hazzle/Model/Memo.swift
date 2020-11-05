@@ -20,4 +20,5 @@ class Memo: Object {
     @objc dynamic var identifier: String = UUID().uuidString
     @objc dynamic var date: Date = Date()
     @objc dynamic var content: String = ""
+    let habitName = LinkingObjects(fromType: Habit.self, property: "memo")
 }

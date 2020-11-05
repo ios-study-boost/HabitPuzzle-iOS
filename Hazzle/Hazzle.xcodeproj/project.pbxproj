@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		683066282553FA170087CF6B /* FinishedCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683066262553FA170087CF6B /* FinishedCollectionViewCell.swift */; };
+		683066292553FA170087CF6B /* FinishedCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 683066272553FA170087CF6B /* FinishedCollectionViewCell.xib */; };
 		872C15F8253EB833007EC5A3 /* Habit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 872C15F7253EB833007EC5A3 /* Habit.swift */; };
 		872C15FB253EB905007EC5A3 /* Memo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 872C15FA253EB905007EC5A3 /* Memo.swift */; };
 		872C15FE253EB98B007EC5A3 /* Alarm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 872C15FD253EB98B007EC5A3 /* Alarm.swift */; };
@@ -30,6 +32,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		683066262553FA170087CF6B /* FinishedCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinishedCollectionViewCell.swift; sourceTree = "<group>"; };
+		683066272553FA170087CF6B /* FinishedCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FinishedCollectionViewCell.xib; sourceTree = "<group>"; };
 		872C15F7253EB833007EC5A3 /* Habit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Habit.swift; sourceTree = "<group>"; };
 		872C15FA253EB905007EC5A3 /* Memo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Memo.swift; sourceTree = "<group>"; };
 		872C15FD253EB98B007EC5A3 /* Alarm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alarm.swift; sourceTree = "<group>"; };
@@ -76,6 +80,15 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		683066212553F8750087CF6B /* cell */ = {
+			isa = PBXGroup;
+			children = (
+				683066262553FA170087CF6B /* FinishedCollectionViewCell.swift */,
+				683066272553FA170087CF6B /* FinishedCollectionViewCell.xib */,
+			);
+			path = cell;
+			sourceTree = "<group>";
+		};
 		872C15F6253EB81D007EC5A3 /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -116,6 +129,7 @@
 		874DE0972542CABC0046B6E0 /* Finished */ = {
 			isa = PBXGroup;
 			children = (
+				683066212553F8750087CF6B /* cell */,
 				874DE09D2542D13A0046B6E0 /* Finished.storyboard */,
 				874DE0AC2542D28B0046B6E0 /* FinishedViewController.swift */,
 			);
@@ -253,6 +267,7 @@
 				874DE0A12542D1430046B6E0 /* Home.storyboard in Resources */,
 				874DE0A42542D1530046B6E0 /* HabitDetail.storyboard in Resources */,
 				874DE09B2542D0FA0046B6E0 /* Statistics.storyboard in Resources */,
+				683066292553FA170087CF6B /* FinishedCollectionViewCell.xib in Resources */,
 				874DE09E2542D13A0046B6E0 /* Finished.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -331,6 +346,7 @@
 				874DE0B82542D3100046B6E0 /* HabitCreateViewController.swift in Sources */,
 				874DE0B02542D2B90046B6E0 /* HomeViewController.swift in Sources */,
 				874DE0B42542D2EA0046B6E0 /* HabitDetailViewController.swift in Sources */,
+				683066282553FA170087CF6B /* FinishedCollectionViewCell.swift in Sources */,
 				872C15FB253EB905007EC5A3 /* Memo.swift in Sources */,
 				872C15FE253EB98B007EC5A3 /* Alarm.swift in Sources */,
 				874DE0AA2542D23A0046B6E0 /* StatisticsViewController.swift in Sources */,

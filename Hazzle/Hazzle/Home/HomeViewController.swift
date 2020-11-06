@@ -7,6 +7,7 @@
 import UIKit
 import SnapKit
 import Then
+import RealmSwift
 
 class HomeViewController: UIViewController {
     let habits = ["수영하기 🏊‍♀️", "물 마시기 💦", "일기 쓰기 📓"]
@@ -37,6 +38,7 @@ class HomeViewController: UIViewController {
         super.viewDidLoad()
         initUI()
         createHabbitList()
+        getHabits();
     }
     /*
     // MARK: - Navigation
@@ -151,5 +153,19 @@ extension HomeViewController {
         //선택된 습관 객체 넘겨주기
         let nextVC: HabitDetailViewController = HabitDetailViewController()
         self.navigationController?.pushViewController(nextVC, animated: true)
+    }
+}
+
+
+// MARK: - 데이터 처리
+extension HomeViewController {
+    func getHabits() {
+        do {
+            let realm = try Realm()
+            let habits = realm.objects(Habit.self)
+            print(habits)
+        } catch(let err) {
+            print(err)
+        }
     }
 }
